@@ -2,14 +2,14 @@ package com.cursospringboot.cursospringboot.resources.exceptions;
 
 import java.io.Serializable;
 
-public class StandartError implements Serializable {
+public class StandardError implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private Integer status;
     private String msg;
     private long timeStamp;
 
-    public StandartError(Integer status, String msg, long timeStamp) {
+    public StandardError(Integer status, String msg, long timeStamp) {
         this.status = status;
         this.msg = msg;
         this.timeStamp = timeStamp;
