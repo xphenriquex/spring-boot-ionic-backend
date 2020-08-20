@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Cidade implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -20,7 +18,6 @@ public class Cidade implements Serializable {
     private Integer id;
     private String nome;
 
-    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "estado_id")
     private Estado estado;
@@ -28,7 +25,7 @@ public class Cidade implements Serializable {
     public Cidade() {
     }
 
-    public Cidade(Integer id, String nome, Estado estado) {
+    public Cidade(final Integer id, final String nome, final Estado estado) {
         this.id = id;
         this.nome = nome;
         this.estado = estado;
@@ -38,7 +35,7 @@ public class Cidade implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -46,7 +43,7 @@ public class Cidade implements Serializable {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(final String nome) {
         this.nome = nome;
     }
 
@@ -54,7 +51,7 @@ public class Cidade implements Serializable {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(final Estado estado) {
         this.estado = estado;
     }
 
@@ -67,14 +64,14 @@ public class Cidade implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Cidade other = (Cidade) obj;
+        final Cidade other = (Cidade) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
