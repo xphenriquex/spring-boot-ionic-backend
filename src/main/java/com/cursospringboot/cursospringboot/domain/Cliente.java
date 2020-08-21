@@ -25,7 +25,7 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private String emal;
+    private String email;
     private String cpfOuCnpj;
     private Integer tipo;
     
@@ -43,12 +43,12 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(Integer id, String nome, String emal, String cpfOuCnpj, TipoCliente tipo) {
+    public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
         this.id = id;
         this.nome = nome;
-        this.emal = emal;
+        this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
-        this.tipo = tipo.getCod();
+        this.tipo = (tipo == null) ? null : tipo.getCod();
     }
 
     public Integer getId() {
@@ -67,12 +67,12 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public String getEmal() {
-        return emal;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmal(String emal) {
-        this.emal = emal;
+    public void setEmail(String emal) {
+        this.email = emal;
     }
 
     public String getCpfOuCnpj() {
