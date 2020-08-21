@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.cursospringboot.cursospringboot.domain.Categoria;
+import com.cursospringboot.cursospringboot.domain.Cliente;
 import com.cursospringboot.cursospringboot.dto.CategoriaDTO;
 import com.cursospringboot.cursospringboot.repositories.CategoriaRepository;
 import com.cursospringboot.cursospringboot.services.exceptions.DataIntegrityException;
@@ -38,8 +39,9 @@ public class CategoriaService {
     }
 
     public Categoria update(Categoria obj){
-        find(obj.getId());
-        return repo.save(obj);
+        Categoria newObj = find(obj.getId());
+        updateData(newObj, obj);
+        return repo.save(newObj);
     }
 
     public  void delete(Integer id){
@@ -62,5 +64,9 @@ public class CategoriaService {
 
     public  Categoria fromDTO(CategoriaDTO objDto){
         return new Categoria(objDto.getId(), objDto.getNome());
+    }
+
+    private void updateData(Categoria newObj, Categoria obj){
+        newObj.setNome(obj.getNome());
     }
 }
