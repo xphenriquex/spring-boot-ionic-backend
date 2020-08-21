@@ -1,16 +1,21 @@
 package com.cursospringboot.cursospringboot.resources;
 
+import com.cursospringboot.cursospringboot.domain.Categoria;
 import com.cursospringboot.cursospringboot.domain.Cliente;
 import com.cursospringboot.cursospringboot.domain.Cliente;
+import com.cursospringboot.cursospringboot.dto.CategoriaDTO;
 import com.cursospringboot.cursospringboot.dto.ClienteDTO;
+import com.cursospringboot.cursospringboot.dto.ClienteNewDTO;
 import com.cursospringboot.cursospringboot.services.ClienteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +31,19 @@ public class ClienteResource {
     {
         Cliente obj = service.find(id);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto){
+        Cliente obj = service.fromDTO(objDto);
+        obj = service.insert(obj);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(obj.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
