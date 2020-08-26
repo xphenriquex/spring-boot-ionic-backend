@@ -1,6 +1,8 @@
 package com.cursospringboot.cursospringboot.config;
 
 import com.cursospringboot.cursospringboot.services.DBService;
+import com.cursospringboot.cursospringboot.services.EmailService;
+import com.cursospringboot.cursospringboot.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -28,5 +30,10 @@ public class DevConfig {
         }
         dbService.instantiateTestDatabase();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return new SmtpEmailService();
     }
 }
