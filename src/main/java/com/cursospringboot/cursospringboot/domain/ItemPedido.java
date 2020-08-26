@@ -1,6 +1,8 @@
 package com.cursospringboot.cursospringboot.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -104,5 +106,19 @@ public class ItemPedido implements Serializable {
         return true;
     }
 
-    
+    @Override
+    public String toString() {
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        final StringBuilder sb = new StringBuilder();
+        sb.append(getProduto().getNome());
+        sb.append(", QTE: ");
+        sb.append(getQuantidade());
+        sb.append(", Preço unitário: ");
+        sb.append(nf.format(getPreco()));
+        sb.append(", Subtotal: ");
+        sb.append(nf.format(getSubTotal()));
+        sb.append("\n");
+
+        return sb.toString();
+    }
 }
