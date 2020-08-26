@@ -10,7 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import javax.mail.internet.MimeMessage;
 
 public class SmtpEmailService extends AbstractEmailService {
-    private  static final Logger LOG = LoggerFactory.getLogger(EmailService.class);
+    private  static final Logger LOG = LoggerFactory.getLogger(SmtpEmailService.class);
 
     @Autowired
     private MailSender mailSender;
