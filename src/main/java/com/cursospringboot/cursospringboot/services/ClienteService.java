@@ -5,11 +5,14 @@ import java.util.Optional;
 
 import com.cursospringboot.cursospringboot.domain.*;
 import com.cursospringboot.cursospringboot.domain.Cliente;
+import com.cursospringboot.cursospringboot.domain.enums.Perfil;
 import com.cursospringboot.cursospringboot.domain.enums.TipoCliente;
 import com.cursospringboot.cursospringboot.dto.ClienteDTO;
 import com.cursospringboot.cursospringboot.dto.ClienteNewDTO;
 import com.cursospringboot.cursospringboot.repositories.ClienteRepository;
 import com.cursospringboot.cursospringboot.repositories.EnderecoRepository;
+import com.cursospringboot.cursospringboot.security.UserSS;
+import com.cursospringboot.cursospringboot.services.exceptions.AuthorizationException;
 import com.cursospringboot.cursospringboot.services.exceptions.DataIntegrityException;
 import com.cursospringboot.cursospringboot.services.exceptions.ObjectNotFoundException;
 
@@ -35,6 +38,13 @@ public class ClienteService {
     private EnderecoRepository enderecoRepository;
 
     public Cliente find(Integer id) {
+
+        UserSS user = UserService.authenticated();
+
+        if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())){
+            throw new AuthorizationException("Acesso negado!");
+        }
+
         Optional<Cliente> obj = repo.findById(id);
         return obj.orElseThrow(
             () -> 
