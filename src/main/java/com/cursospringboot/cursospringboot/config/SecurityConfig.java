@@ -17,9 +17,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.util.Arrays;
 
@@ -45,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/produtos/**",
             "/categorias/**",
             "/clientes/**",
+            "/estados/**"
     };
 
     private static final String [] PUBLIC_MATCHERS_POST = {
@@ -58,6 +61,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         if(Arrays.asList(env.getActiveProfiles()).contains("test")){
             http.headers().frameOptions().disable();
         }
+
+        //Resolvendo problema de acentuação
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+        http.addFilterBefore(filter, CsrfFilter.class);
+
 
         http.cors().and().csrf().disable();
         http.authorizeRequests()
